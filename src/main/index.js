@@ -1,6 +1,6 @@
 'use strict'
 
-import {app, BrowserWindow, Menu, ipcMain} from 'electron'
+import {app, BrowserWindow, Menu, ipcMain, MenuItem, dialog} from 'electron'
 
 const version = app.getVersion()
 const name = app.getName()
@@ -63,7 +63,7 @@ ipcMain.on('show-context-menu', function (event) {
 
 function addUpdateMenuItems (items, position) {
   if (process.mas) return
-  let updateItems = [ {
+  let updateItems = [{
     label: '正在检查更新',
     enabled: false,
     key: 'checkingForUpdate'
@@ -181,6 +181,20 @@ let template = [{
     click: () => {
       app.emit('activate')
     }
+  }, {
+    label: '应用程序菜单演示',
+    click: function (item, focusedWindow) {
+      if (focusedWindow) {
+        const options = {
+          type: 'info',
+          title: '应用程序菜单演示',
+          buttons: ['好的'],
+          message: '此演示用于 "菜单" 部分, 展示如何在应用程序菜单中创建可点击的菜单项.'
+        }
+        dialog.showMessageBox(focusedWindow, options, function () {
+        })
+      }
+    }
   }]
 }, {
   label: '帮助',
@@ -221,8 +235,6 @@ if (process.platform === 'darwin') {
     submenu: [{
       label: `关于 ${name}`,
       role: 'about'
-    }, {
-      label: `检查更新`
     }, {
       label: `提供${name}反馈意见`,
       accelerator: 'CmdOrCtrl+Z'
@@ -276,3 +288,19 @@ if (process.platform === 'win32') {
   const helpMenu = template[template.length - 1].submenu
   addUpdateMenuItems(helpMenu, 0)
 }
+
+const menu = new Menu()
+menu.append(new MenuItem({label: 'Hello'}))
+menu.append(new MenuItem({type: 'separator'}))
+menu.append(new MenuItem({label: 'Electron', type: 'checkbox', checked: true}))
+
+app.on('browser-window-created', (event, win) => {
+  win.webContents.on('context-menu', (e, params) => {
+    menu.popup(win, params.x, params.y)
+  })
+})
+
+ipcMain.on('show-context-menu', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  menu.popup(win)
+})
