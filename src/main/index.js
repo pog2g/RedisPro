@@ -93,20 +93,6 @@ let template = [{
     accelerator: 'CmdOrCtrl+A',
     role: 'selectall'
   }, {
-    label: '切换开发者工具',
-    accelerator: (() => {
-      if (process.platform === 'darwin') {
-        return 'Alt+Command+I'
-      } else {
-        return 'Ctrl+Shift+I'
-      }
-    })(),
-    click: (item, focusedWindow) => {
-      if (focusedWindow) {
-        focusedWindow.toggleDevTools()
-      }
-    }
-  }, {
     type: 'separator'
   }, {
     label: '进入全屏幕',
@@ -125,9 +111,11 @@ let template = [{
   }]
 }, {
   label: '工具',
-  role: 'window',
   submenu: [{
     label: '粘贴',
+    accelerator: 'CmdOrCtrl+M'
+  }, {
+    label: '剪切',
     accelerator: 'CmdOrCtrl+M'
   }, {
     label: '复制',
@@ -173,7 +161,7 @@ let template = [{
   }]
 }, {
   label: '帮助',
-  role: 'window',
+  role: 'help',
   submenu: [{
     label: 'RedisPro帮助',
     accelerator: 'CmdOrCtrl+M',
@@ -184,6 +172,20 @@ let template = [{
     role: 'close'
   }, {
     type: 'separator'
+  }, {
+    label: '切换开发者工具',
+    accelerator: (() => {
+      if (process.platform === 'darwin') {
+        return 'Alt+Command+I'
+      } else {
+        return 'Ctrl+Shift+I'
+      }
+    })(),
+    click: (item, focusedWindow) => {
+      if (focusedWindow) {
+        focusedWindow.toggleDevTools()
+      }
+    }
   }, {
     label: 'RedisPro 1.0 的新功能',
     accelerator: 'CmdOrCtrl+Shift+T'
