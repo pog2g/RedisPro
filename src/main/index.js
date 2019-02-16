@@ -1,6 +1,13 @@
 'use strict'
 
-import {app, BrowserWindow, Menu, ipcMain, MenuItem, dialog} from 'electron'
+import {
+  app,
+  BrowserWindow,
+  Menu,
+  ipcMain,
+  MenuItem,
+  dialog
+} from 'electron'
 
 const version = app.getVersion()
 const name = app.getName()
@@ -228,6 +235,8 @@ let template = [{
     accelerator: 'CmdOrCtrl+Shift+T'
   }]
 }]
+
+// 更具平台加载菜单(mac平台)
 if (process.platform === 'darwin') {
   const name = app.getName()
   template.unshift({
@@ -284,11 +293,13 @@ if (process.platform === 'darwin') {
   addUpdateMenuItems(template[0].submenu, 1)
 }
 
+// 更具平台加载菜单(win平台)
 if (process.platform === 'win32') {
   const helpMenu = template[template.length - 1].submenu
   addUpdateMenuItems(helpMenu, 0)
 }
 
+// 创建弹出菜单
 const menu = new Menu()
 menu.append(new MenuItem({label: 'Hello'}))
 menu.append(new MenuItem({type: 'separator'}))
