@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>RedisPro</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
     <% if (htmlWebpackPlugin.options.nodeModules) { %>
         <!-- Add `node_modules/` to global paths so `require` works properly in development -->
         <script>

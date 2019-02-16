@@ -4,7 +4,7 @@ process.env.BABEL_ENV = 'web'
 
 const path = require('path')
 const webpack = require('webpack')
-
+const config = require('../config')
 const BabiliWebpackPlugin = require('babili-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -96,6 +96,7 @@ let webConfig = {
     new MiniCssExtractPlugin({filename: 'styles.css'}),
     new HtmlWebpackPlugin({
       filename: 'index.html',
+      title: config.dev.appName,
       template: path.resolve(__dirname, '../src/index.ejs'),
       minify: {
         collapseWhitespace: true,
