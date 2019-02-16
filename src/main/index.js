@@ -1,6 +1,6 @@
 'use strict'
 
-import {app, BrowserWindow, Menu} from 'electron'
+import {app, BrowserWindow, Menu, ipcMain} from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -46,51 +46,52 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+ipcMain.on('show-context-menu', function (event) {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  Menu.popup(win)
+})
+
 let template = [{
   label: 'RedisPro',
   submenu: [{
-    label: '撤销',
+    label: '关于RedisPro',
     accelerator: 'CmdOrCtrl+Z',
     role: 'undo'
   }, {
-    label: '重做',
-    accelerator: 'Shift+CmdOrCtrl+Z',
-    role: 'redo'
+    label: '检查更新',
+    accelerator: 'CmdOrCtrl+Z',
+    role: 'undo'
   }, {
     type: 'separator'
   }, {
-    label: '剪切',
+    label: '偏好设置...',
     accelerator: 'CmdOrCtrl+X',
     role: 'cut'
   }, {
-    label: '复制',
-    accelerator: 'CmdOrCtrl+C',
-    role: 'copy'
+    type: 'separator'
   }, {
-    label: '粘贴',
+    label: '主页',
     accelerator: 'CmdOrCtrl+V',
     role: 'paste'
   }, {
-    label: '全选',
+    label: '控制台',
+    accelerator: 'CmdOrCtrl+A'
+  }, {
+    label: '退出',
     accelerator: 'CmdOrCtrl+A',
     role: 'selectall'
   }]
 }, {
   label: '查看',
   submenu: [{
-    label: '切换全屏',
-    accelerator: (() => {
-      if (process.platform === 'darwin') {
-        return 'Ctrl+Command+F'
-      } else {
-        return 'F11'
-      }
-    })(),
-    click: (item, focusedWindow) => {
-      if (focusedWindow) {
-        focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
-      }
-    }
+    label: '显示状态栏',
+    accelerator: 'CmdOrCtrl+V',
+    role: 'paste'
+  }, {
+    label: '隐藏工具栏',
+    accelerator: 'CmdOrCtrl+A',
+    role: 'selectall'
   }, {
     label: '切换开发者工具',
     accelerator: (() => {
@@ -107,6 +108,38 @@ let template = [{
     }
   }, {
     type: 'separator'
+  }, {
+    label: '进入全屏幕',
+    accelerator: (() => {
+      if (process.platform === 'darwin') {
+        return 'Ctrl+Command+F'
+      } else {
+        return 'F11'
+      }
+    })(),
+    click: (item, focusedWindow) => {
+      if (focusedWindow) {
+        focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
+      }
+    }
+  }]
+}, {
+  label: '工具',
+  role: 'window',
+  submenu: [{
+    label: '粘贴',
+    accelerator: 'CmdOrCtrl+M'
+  }, {
+    label: '复制',
+    accelerator: 'CmdOrCtrl+W'
+  }, {
+    type: 'separator'
+  }, {
+    label: '导入配置',
+    accelerator: 'CmdOrCtrl+Shift+T'
+  }, {
+    label: '导出配置',
+    accelerator: 'CmdOrCtrl+Shift+T'
   }]
 }, {
   label: '窗口',
@@ -124,10 +157,35 @@ let template = [{
   }, {
     label: '重新打开窗口',
     accelerator: 'CmdOrCtrl+Shift+T',
-    enabled: false,
+    enabled: true,
     key: 'reopenMenuItem',
     click: () => {
       app.emit('activate')
     }
+  }, {
+    label: '前置全部窗口',
+    accelerator: 'CmdOrCtrl+Shift+T',
+    enabled: true,
+    key: 'reopenMenuItem',
+    click: () => {
+      app.emit('activate')
+    }
+  }]
+}, {
+  label: '帮助',
+  role: 'window',
+  submenu: [{
+    label: 'RedisPro帮助',
+    accelerator: 'CmdOrCtrl+M',
+    role: 'minimize'
+  }, {
+    label: '在线文档',
+    accelerator: 'CmdOrCtrl+W',
+    role: 'close'
+  }, {
+    type: 'separator'
+  }, {
+    label: 'RedisPro 1.0 的新功能',
+    accelerator: 'CmdOrCtrl+Shift+T'
   }]
 }]
