@@ -2,6 +2,8 @@
 
 import {app, BrowserWindow, Menu, ipcMain} from 'electron'
 
+const version = app.getVersion()
+const name = app.getName()
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -53,9 +55,13 @@ ipcMain.on('show-context-menu', function (event) {
 })
 
 let template = [{
-  label: 'RedisPro',
+  label: `${name} ${version}`,
   submenu: [{
-    label: '关于RedisPro',
+    label: `关于${name}`,
+    accelerator: 'CmdOrCtrl+Z',
+    role: 'undo'
+  }, {
+    label: `版本${version}`,
     accelerator: 'CmdOrCtrl+Z',
     role: 'undo'
   }, {
@@ -163,7 +169,7 @@ let template = [{
   label: '帮助',
   role: 'help',
   submenu: [{
-    label: 'RedisPro帮助',
+    label: `${name}帮助`,
     accelerator: 'CmdOrCtrl+M',
     role: 'minimize'
   }, {
@@ -173,7 +179,7 @@ let template = [{
   }, {
     type: 'separator'
   }, {
-    label: '切换开发者工具',
+    label: '切换到开发者模式',
     accelerator: (() => {
       if (process.platform === 'darwin') {
         return 'Alt+Command+I'
@@ -187,7 +193,7 @@ let template = [{
       }
     }
   }, {
-    label: 'RedisPro 1.0 的新功能',
+    label: `${name} ${version} 的新功能`,
     accelerator: 'CmdOrCtrl+Shift+T'
   }]
 }]
