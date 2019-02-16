@@ -58,46 +58,43 @@ let template = [{
   label: `${name} ${version}`,
   submenu: [{
     label: `关于${name}`,
-    accelerator: 'CmdOrCtrl+Z',
-    role: 'undo'
-  }, {
-    label: `版本${version}`,
-    accelerator: 'CmdOrCtrl+Z',
-    role: 'undo'
-  }, {
-    label: '检查更新',
-    accelerator: 'CmdOrCtrl+Z',
-    role: 'undo'
+    accelerator: 'CmdOrCtrl+Z'
   }, {
     type: 'separator'
   }, {
     label: '偏好设置...',
-    accelerator: 'CmdOrCtrl+X',
-    role: 'cut'
+    accelerator: 'CmdOrCtrl+X'
+  }, {
+    type: 'separator'
+  }, {
+    label: `检查更新`,
+    accelerator: 'CmdOrCtrl+Z'
+  }, {
+    label: `提供${name}反馈意见`,
+    accelerator: 'CmdOrCtrl+Z'
   }, {
     type: 'separator'
   }, {
     label: '主页',
-    accelerator: 'CmdOrCtrl+V',
-    role: 'paste'
+    accelerator: 'CmdOrCtrl+V'
   }, {
     label: '控制台',
     accelerator: 'CmdOrCtrl+A'
   }, {
     label: '退出',
-    accelerator: 'CmdOrCtrl+A',
-    role: 'selectall'
+    accelerator: 'Command+Q',
+    click: () => {
+      app.quit()
+    }
   }]
 }, {
   label: '查看',
   submenu: [{
     label: '显示状态栏',
-    accelerator: 'CmdOrCtrl+V',
-    role: 'paste'
+    accelerator: 'CmdOrCtrl+V'
   }, {
     label: '隐藏工具栏',
-    accelerator: 'CmdOrCtrl+A',
-    role: 'selectall'
+    accelerator: 'CmdOrCtrl+A'
   }, {
     type: 'separator'
   }, {
@@ -119,13 +116,16 @@ let template = [{
   label: '工具',
   submenu: [{
     label: '粘贴',
-    accelerator: 'CmdOrCtrl+M'
+    accelerator: 'CmdOrCtrl+V',
+    role: 'paste'
   }, {
     label: '剪切',
-    accelerator: 'CmdOrCtrl+M'
+    accelerator: 'CmdOrCtrl+X',
+    role: 'cut'
   }, {
     label: '复制',
-    accelerator: 'CmdOrCtrl+W'
+    accelerator: 'CmdOrCtrl+C',
+    role: 'copy'
   }, {
     type: 'separator'
   }, {
