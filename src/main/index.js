@@ -42,6 +42,13 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+app.on('window-all-closed', () => {
+  let reopenMenuItem = findReopenMenuItem()
+  if (reopenMenuItem) reopenMenuItem.enabled = true
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
 
 app.on('activate', () => {
   if (mainWindow === null) {
@@ -54,40 +61,50 @@ ipcMain.on('show-context-menu', function (event) {
   Menu.popup(win)
 })
 
-let template = [{
-  label: `${name} ${version}`,
-  submenu: [{
-    label: `关于${name}`,
-    accelerator: 'CmdOrCtrl+Z'
+function addUpdateMenuItems (items, position) {
+  if (process.mas) return
+  let updateItems = [ {
+    label: '正在检查更新',
+    enabled: false,
+    key: 'checkingForUpdate'
   }, {
-    type: 'separator'
-  }, {
-    label: '偏好设置...',
-    accelerator: 'CmdOrCtrl+X'
-  }, {
-    type: 'separator'
-  }, {
-    label: `检查更新`,
-    accelerator: 'CmdOrCtrl+Z'
-  }, {
-    label: `提供${name}反馈意见`,
-    accelerator: 'CmdOrCtrl+Z'
-  }, {
-    type: 'separator'
-  }, {
-    label: '主页',
-    accelerator: 'CmdOrCtrl+V'
-  }, {
-    label: '控制台',
-    accelerator: 'CmdOrCtrl+A'
-  }, {
-    label: '退出',
-    accelerator: 'Command+Q',
+    label: '检查更新',
+    visible: false,
+    key: 'checkForUpdate',
     click: () => {
-      app.quit()
+      require('electron').autoUpdater.checkForUpdates()
+    }
+  }, {
+    label: '重启并安装更新',
+    enabled: true,
+    visible: false,
+    key: 'restartToUpdate',
+    click: () => {
+      require('electron').autoUpdater.quitAndInstall()
     }
   }]
-}, {
+
+  items.splice.apply(items, [position, 0].concat(updateItems))
+}
+
+function findReopenMenuItem () {
+  const menu = Menu.getApplicationMenu()
+  if (!menu) return
+
+  let reopenMenuItem
+  menu.items.forEach(item => {
+    if (item.submenu) {
+      item.submenu.items.forEach(item => {
+        if (item.key === 'reopenMenuItem') {
+          reopenMenuItem = item
+        }
+      })
+    }
+  })
+  return reopenMenuItem
+}
+
+let template = [{
   label: '查看',
   submenu: [{
     label: '显示状态栏',
@@ -197,3 +214,65 @@ let template = [{
     accelerator: 'CmdOrCtrl+Shift+T'
   }]
 }]
+if (process.platform === 'darwin') {
+  const name = app.getName()
+  template.unshift({
+    label: name,
+    submenu: [{
+      label: `关于 ${name}`,
+      role: 'about'
+    }, {
+      label: `检查更新`
+    }, {
+      label: `提供${name}反馈意见`,
+      accelerator: 'CmdOrCtrl+Z'
+    }, {
+      type: 'separator'
+    }, {
+      label: '偏好设置...',
+      accelerator: 'CmdOrCtrl+X'
+    }, {
+      type: 'separator'
+    }, {
+      label: '服务',
+      role: 'services',
+      submenu: []
+    }, {
+      type: 'separator'
+    }, {
+      label: `隐藏 ${name}`,
+      accelerator: 'Command+H',
+      role: 'hide'
+    }, {
+      label: '隐藏其它',
+      accelerator: 'Command+Alt+H',
+      role: 'hideothers'
+    }, {
+      label: '显示全部',
+      role: 'unhide'
+    }, {
+      type: 'separator'
+    }, {
+      label: '退出',
+      accelerator: 'Command+Q',
+      click: () => {
+        app.quit()
+      }
+    }]
+  })
+
+  // 窗口菜单.
+  template[3].submenu.push({
+    type: 'separator'
+  }, {
+    label: '前置所有',
+    role: 'front'
+  })
+
+  addUpdateMenuItems(template[0].submenu, 1)
+}
+
+if (process.platform === 'win32') {
+  const helpMenu = template[template.length - 1].submenu
+  addUpdateMenuItems(helpMenu, 0)
+}
