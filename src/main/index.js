@@ -302,7 +302,7 @@ if (process.platform === 'darwin') {
 // 更具平台加载菜单(win平台)
 if (process.platform === 'win32') {
   const helpMenu = template[template.length - 1].submenu
-  addUpdateMenuItems(helpMenu, 0)
+  addUpdateMenuItems(helpMenu, 2)
 }
 
 // 创建弹出菜单

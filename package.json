@@ -25,6 +25,37 @@
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix"
   },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "patrikx3",
+        "repo": "redis-ui"
+      }
+    ],
+    "appId": "com.zorionzhou.redis",
+    "productName": "P3X Redis UI",
+    "copyright": "(c) Copyright P3X / Corifeus / PatrikX3 as MIT license",
+    "win": {
+      "icon": "build/icons/icon.icon",
+      "target": "nsis"
+    },
+    "nsis": {
+      "artifactName": "${name}-electron-setup-${os}-${version}.${ext}"
+    },
+    "linux": {
+      "category": "Development",
+      "icon": "build/icons",
+      "target": "appimage"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "build/icons/icon.icns",
+      "target": [
+        "dmg"
+      ]
+    }
+  },
   "dependencies": {
     "vue": "^2.5.16",
     "axios": "^0.18.0",
