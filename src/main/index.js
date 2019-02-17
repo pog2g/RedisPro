@@ -28,11 +28,7 @@ function createWindow () {
   /**
    * Initial window options
    */
-  mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
-  })
+  mainWindow = new BrowserWindow({ titleBarStyle: 'hidden' })
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
   mainWindow.loadURL(winURL)

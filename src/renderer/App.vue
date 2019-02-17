@@ -1,15 +1,25 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+    <div id="app">
+        <Mytitle/>
+        <!-- <router-view></router-view> -->
+        <router-view/>
+    </div>
 </template>
 
 <script>
+  import Mytitle from './components/MyTitle'
+
   export default {
-    name: 'redis-pro'
+    name: 'app',
+    components: {
+      Mytitle
+    }
   }
 </script>
 
 <style>
-  /* CSS */
+    html, body, div {
+        margin: 0;
+        padding: 0;
+    }
 </style>
