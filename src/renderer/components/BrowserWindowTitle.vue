@@ -1,6 +1,6 @@
 <template>
     <div id="title">
-        <div>lsdkjflsdkfjlsdkf</div>
+        <div>应用程序标题栏</div>
     </div>
 </template>
 
