@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "author": "zorionzhou <zorionzhou@163.com>",
   "description": "redis pro",
+  "title": "RedisPro",
   "license": "ETC",
   "main": "./dist/electron/main.js",
   "scripts": {
