@@ -1,7 +1,10 @@
 <template>
     <div id="title">
         <div style="float: left;">
-            <Button style="margin-right: 20px"><Icon type="md-add" />新建链接</Button>
+            <Button style="margin-right: 20px">
+                <Icon type="md-add"/>
+                新建链接
+            </Button>
             <Button style="margin-right: 20px" type="success">监控</Button>
             <Button style="margin-right: 20px" type="info">信息</Button>
             <Button type="warning">配置</Button>
@@ -27,12 +30,11 @@
 
 <style scoped>
     #title {
-        background:
-                radial-gradient(
-                        ellipse at top left,
-                        rgba(255, 255, 255, 1) 40%,
-                        rgba(229, 229, 229, .9) 100%
-                );
+        background: radial-gradient(
+                ellipse at top left,
+                rgba(255, 255, 255, 1) 40%,
+                rgba(229, 229, 229, .9) 100%
+        );
         position: absolute;
         width: 100%;
         height: 70px;
