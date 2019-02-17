@@ -60,6 +60,11 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
+    setTimeout(function () {
+      var menuItem = MenuItem.getMenuItemById('checkForUpdate')
+      menuItem.visible = true
+      console.log('=========已经更新')
+    }, 10000)
   }
 })
 
@@ -77,6 +82,7 @@ function addUpdateMenuItems (items, position) {
   }, {
     label: '检查更新',
     visible: false,
+    id: 'checkForUpdate',
     key: 'checkForUpdate',
     click: () => {
       require('electron').autoUpdater.checkForUpdates()
@@ -321,3 +327,5 @@ ipcMain.on('show-context-menu', (event) => {
   const win = BrowserWindow.fromWebContents(event.sender)
   menu.popup(win)
 })
+
+
