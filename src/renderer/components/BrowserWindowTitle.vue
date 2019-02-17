@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'MyTitle'
+    name: 'BrowserWindowTitle'
   }
 </script>
 
@@ -14,9 +14,12 @@
     #title {
         position: absolute;
         width: 100%;
+        height: 60px;
+        padding-left: 20px;
+        padding-right: 20px;
         padding-top: 20px;
-        height: 52px;
-        background-color: #f6f6f6;
+        background-color: #e3e4e5;
+        box-shadow: 0 1px 0 #cfcfcf;
         -webkit-app-region: drag;
     }
 </style>

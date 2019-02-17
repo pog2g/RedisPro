@@ -1,18 +1,18 @@
 <template>
     <div id="app">
-        <Mytitle/>
+        <browser-window-title/>
         <!-- <router-view></router-view> -->
         <router-view/>
     </div>
 </template>
 
 <script>
-  import Mytitle from './components/MyTitle'
+  import BrowserWindowTitle from './components/BrowserWindowTitle'
 
   export default {
     name: 'app',
     components: {
-      Mytitle
+      BrowserWindowTitle
     }
   }
 </script>
