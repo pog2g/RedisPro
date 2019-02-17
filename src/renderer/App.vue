@@ -1,8 +1,9 @@
 <template>
     <div id="app">
         <browser-window-title/>
-        <!-- <router-view></router-view> -->
-        <router-view/>
+        <div>
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 

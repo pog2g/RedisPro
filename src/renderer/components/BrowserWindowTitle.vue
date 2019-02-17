@@ -1,17 +1,21 @@
 <template>
     <div id="title">
-        <el-row>
-            <div style="float: left;">
-                <el-button>新建链接</el-button>
-                <el-button type="primary">监控</el-button>
-                <el-button type="success">信息</el-button>
-                <el-button type="info">配置</el-button>
-            </div>
-            <div style="float: right;">
-                <el-button type="primary" icon="el-icon-arrow-left"></el-button>
-                <el-button type="primary"><i class="el-icon-arrow-right el-icon--right"></i></el-button>
-            </div>
-        </el-row>
+        <div style="float: left;">
+            <Button style="margin-right: 20px"><Icon type="md-add" />新建链接</Button>
+            <Button style="margin-right: 20px" type="success">监控</Button>
+            <Button style="margin-right: 20px" type="info">信息</Button>
+            <Button type="warning">配置</Button>
+        </div>
+        <div style="float: right;">
+            <ButtonGroup :size="buttonSize">
+                <Button :size="buttonSize" type="primary">
+                    <Icon type="ios-arrow-back"/>
+                </Button>
+                <Button :size="buttonSize" type="primary">
+                    <Icon type="ios-arrow-forward"/>
+                </Button>
+            </ButtonGroup>
+        </div>
     </div>
 </template>
 
@@ -23,13 +27,18 @@
 
 <style scoped>
     #title {
+        background:
+                radial-gradient(
+                        ellipse at top left,
+                        rgba(255, 255, 255, 1) 40%,
+                        rgba(229, 229, 229, .9) 100%
+                );
         position: absolute;
         width: 100%;
         height: 70px;
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 20px;
-        background-color: #e3e4e5;
         box-shadow: 0 1px 0 #cfcfcf;
         -webkit-app-region: drag;
     }

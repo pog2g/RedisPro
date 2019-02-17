@@ -57,14 +57,15 @@
     }
   },
   "dependencies": {
-    "vue": "^2.5.16",
     "axios": "^0.18.0",
+    "install": "^0.12.2",
+    "iview": "^3.2.2",
+    "js-cookie": "2.2.0",
+    "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
+    "vue-i18n": "7.3.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "element-ui": "2.5.4",
-    "js-cookie": "2.2.0",
-    "vue-i18n": "7.3.2",
     "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
