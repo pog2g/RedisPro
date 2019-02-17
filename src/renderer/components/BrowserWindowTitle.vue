@@ -14,7 +14,7 @@
     #title {
         position: absolute;
         width: 100%;
-        height: 60px;
+        height: 50px;
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 20px;
