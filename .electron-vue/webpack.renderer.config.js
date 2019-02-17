@@ -1,16 +1,15 @@
 'use strict'
 
 process.env.BABEL_ENV = 'renderer'
-const config = require('../config')
 const path = require('path')
-const {dependencies} = require('../package.json')
+const { dependencies } = require('../package.json')
 const webpack = require('webpack')
-
+const config = require('../config')
 const BabiliWebpackPlugin = require('babili-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const {VueLoaderPlugin} = require('vue-loader')
+const { VueLoaderPlugin } = require('vue-loader')
 
 /**
  * List of node_modules to include in webpack bundle
@@ -124,7 +123,7 @@ let rendererConfig = {
     new MiniCssExtractPlugin({filename: 'styles.css'}),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      title: config.build.appName,
+      appName: config.build.appName,
       template: path.resolve(__dirname, '../src/index.ejs'),
       minify: {
         collapseWhitespace: true,

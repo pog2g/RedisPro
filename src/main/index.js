@@ -10,7 +10,7 @@ import {
 } from 'electron'
 
 const version = app.getVersion()
-const name = app.getName()
+const name = 'RedisPro'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -60,11 +60,6 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
-    setTimeout(function () {
-      var menuItem = MenuItem.getMenuItemById('checkForUpdate')
-      menuItem.visible = true
-      console.log('=========已经更新')
-    }, 10000)
   }
 })
 
@@ -250,7 +245,6 @@ let template = [{
 
 // 更具平台加载菜单(mac平台)
 if (process.platform === 'darwin') {
-  const name = app.getName()
   template.unshift({
     label: name,
     submenu: [{
@@ -327,5 +321,3 @@ ipcMain.on('show-context-menu', (event) => {
   const win = BrowserWindow.fromWebContents(event.sender)
   menu.popup(win)
 })
-
-

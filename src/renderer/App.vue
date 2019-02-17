@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'RedisPro'
+    name: 'redis-pro'
   }
 </script>
 
