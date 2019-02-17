@@ -112,6 +112,20 @@ function findReopenMenuItem () {
 }
 
 let template = [{
+  label: '文件',
+  submenu: [{
+    label: '新建链接',
+    accelerator: 'CmdOrCtrl+V'
+  }, {
+    type: 'separator'
+  }, {
+    label: '导入配置',
+    accelerator: 'CmdOrCtrl+Shift+T'
+  }, {
+    label: '导出配置',
+    accelerator: 'CmdOrCtrl+Shift+T'
+  }]
+}, {
   label: '查看',
   submenu: [{
     label: '显示状态栏',
@@ -150,14 +164,6 @@ let template = [{
     label: '复制',
     accelerator: 'CmdOrCtrl+C',
     role: 'copy'
-  }, {
-    type: 'separator'
-  }, {
-    label: '导入配置',
-    accelerator: 'CmdOrCtrl+Shift+T'
-  }, {
-    label: '导出配置',
-    accelerator: 'CmdOrCtrl+Shift+T'
   }]
 }, {
   label: '窗口',
