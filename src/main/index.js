@@ -1,11 +1,11 @@
 'use strict'
+import {findReopenMenuItem} from '../renderer/utils/menuUtils'
+
 const electron = require('electron')
 const {
   app,
   BrowserWindow,
-  Menu,
-  ipcMain,
-  MenuItem
+  Menu
 } = electron
 const version = app.getVersion()
 const name = app.getName()
@@ -22,7 +22,7 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 // 更具平台环境设置菜单模板
-let template = [{
+let templateTitle = [{
   label: '文件',
   submenu: [{label: '新建链接', accelerator: 'CmdOrCtrl+V'},
     {type: 'separator'},
@@ -104,7 +104,7 @@ let template = [{
 
 // mac平台
 if (process.platform === 'darwin') {
-  template.unshift({
+  templateTitle.unshift({
     label: name,
     submenu: [{label: `关于 ${name}`, role: 'about'},
       {label: `提供${name}反馈意见`, accelerator: 'CmdOrCtrl+Z'},
@@ -126,14 +126,14 @@ if (process.platform === 'darwin') {
       }]
   })
   // mac前置所有菜单
-  template[3].submenu.push({type: 'separator'}, {label: '前置所有', role: 'front'})
+  templateTitle[3].submenu.push({type: 'separator'}, {label: '前置所有', role: 'front'})
   // 更新按钮菜单
-  addUpdateMenuItems(template[0].submenu, 1)
+  addUpdateMenuItems(templateTitle[0].submenu, 1)
 }
 
 // win平台
 if (process.platform === 'win32') {
-  const helpMenu = template[template.length - 1].submenu
+  const helpMenu = templateTitle[templateTitle.length - 1].submenu
   addUpdateMenuItems(helpMenu, 2)
 }
 
@@ -169,9 +169,6 @@ app.on('activate', () => {
 })
 app.on('ready', () => {
   createWindow()
-})
-// 处理app更新
-app.on('will-finish-launching', () => {
   checkUpdate()
 })
 
@@ -196,7 +193,7 @@ function installApp () {
 // 初始化窗口
 function createWindow () {
   mainWindow = new BrowserWindow({titleBarStyle: 'hidden'})
-  const menu = Menu.buildFromTemplate(template)
+  const menu = Menu.buildFromTemplate(templateTitle)
   Menu.setApplicationMenu(menu)
   mainWindow.loadURL(winURL)
   mainWindow.on('closed', () => {
@@ -217,42 +214,33 @@ app.on('window-all-closed', () => {
   }
 })
 
-// 查找某个item
-function findReopenMenuItem (key) {
-  const menu = Menu.getApplicationMenu()
-  if (!menu) return
-
-  let reopenMenuItem
-  menu.items.forEach(item => {
-    if (item.submenu) {
-      item.submenu.items.forEach(item => {
-        if (item.key === key) {
-          reopenMenuItem = item
-        }
-      })
-    }
-  })
-  return reopenMenuItem
-}
-
+// 创建上下文菜单
 app.on('browser-window-created', (event, win) => {
   win.webContents.on('context-menu', (e, params) => {
+    const menu = Menu.buildFromTemplate(templateContext)
     menu.popup(win, params.x, params.y)
   })
 })
-
-// 创建弹出菜单
-const menu = new Menu()
-menu.append(new MenuItem({label: 'Hello'}))
-menu.append(new MenuItem({type: 'separator'}))
-menu.append(new MenuItem({label: 'Electron', type: 'checkbox', checked: true}))
-
-ipcMain.on('show-context-menu', (event) => {
-  const win = BrowserWindow.fromWebContents(event.sender)
-  menu.popup(win)
-})
-
-ipcMain.on('show-context-menu', function (event) {
-  const win = BrowserWindow.fromWebContents(event.sender)
-  Menu.popup(win)
-})
+let templateContext = [
+  {
+    label: '新建链接',
+    key: 'create',
+    click: () => {
+      app.quit()
+    }
+  },
+  {
+    label: '管理组',
+    key: 'manage',
+    click: () => {
+      app.quit()
+    }
+  },
+  {
+    label: '刷新',
+    key: 'show',
+    click: () => {
+      app.quit()
+    }
+  }
+]
