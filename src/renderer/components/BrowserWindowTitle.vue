@@ -1,22 +1,15 @@
 <template>
     <div id="title">
-        <div style="float: left;">
-            <Button style="margin-right: 20px">
-                <Icon type="md-add"/>
-                新建链接
-            </Button>
+        <div class="left">
+            <Button style="margin-right: 20px"><Icon type="md-add"/>新建链接</Button>
             <Button style="margin-right: 20px" type="success">监控</Button>
             <Button style="margin-right: 20px" type="info">信息</Button>
             <Button type="warning">配置</Button>
         </div>
-        <div style="float: right;">
-            <ButtonGroup :size="buttonSize">
-                <Button :size="buttonSize" type="primary">
-                    <Icon type="ios-arrow-back"/>
-                </Button>
-                <Button :size="buttonSize" type="primary">
-                    <Icon type="ios-arrow-forward"/>
-                </Button>
+        <div class="right">
+            <ButtonGroup >
+                <Button type="primary"><Icon type="ios-arrow-back"/></Button>
+                <Button type="primary"><Icon type="ios-arrow-forward"/></Button>
             </ButtonGroup>
         </div>
     </div>
@@ -43,5 +36,11 @@
         padding-top: 20px;
         box-shadow: 0 1px 0 #cfcfcf;
         -webkit-app-region: drag;
+    }
+    .right {
+        float: right !important;
+    }
+    .left {
+        float: left !important;
     }
 </style>
